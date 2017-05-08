@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Quote App</title>
+    <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/skeleton-framework/1.1.1/skeleton.min.css">
+  </head>
+
+  <body>
+    <a href="{% url 'logregapp:index'%}">Logout</a>
+
+    <h1>Welcome, {{currentUser.alias}}!</h1>
+    {% if messages %}
+      <h2>Error while contributing a quote.</h2>
+    {% endif %}
+
+    <h2>Quotable Quotes</h2>
+    <div style="height: 500px; border:3px solid black;font:8px/10px;overflow:auto; margin:10px;">
+      {% for quote in quotableQuotes %}
+      <div style="border:2px solid grey;font:8px/10px;margin:15px;">
+        <p>{{quote.message}}</p>
+        <p>Posted By: <a href="{%url 'quotableappusers:posts' quote.posted_by.id %}">{{quote.posted_by.alias}}</a></p>
+        <form class="addquote" action="{% url 'favoritesapp:addquote' quote.id %}" method="post">
+          {% csrf_token %}
+          <input class="button-primary" type="submit" name="submit" value="Add to My List">
+        </form>
+      </div>
+      {% endfor %}
+    </div>
+
+    <h2>Your Favorites</h2>
+    <div style="height: 500px; border:3px solid black;font:8px/10px;overflow:auto; margin:10px;">
+      {% for quote in favoriteQuotes %}
+      <div style="border:2px solid grey;font:8px/10px;margin:15px;">
+        <p>{{quote.fav_quote.message}}</p>
+        <p>Posted By: <a href="{%url 'quotableappusers:posts' quote.fav_quote.posted_by.id %}">{{quote.fav_quote.posted_by.alias}}</a></p>
+        <form class="removequote" action="{% url 'favoritesapp:removequote' quote.id %}" method="post">
+          {% csrf_token %}
+          <input class="button-primary" type="submit" name="submit" value="Remove From My List">
+        </form>
+      </div>
+      {% endfor %}
+    </div>
+
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+          {% for indx in messages %}
+            <li>{{ message }}</li>
+          {% endfor %}
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+    <h2>Contribute a Quote:</h2>
+    <form class="contribute" action="{% url 'quotableapp:contribute' %}" method="post">
+      {% csrf_token %}
+      <input type="hidden" name="user_id" value="{{request.session.id}}">
+
+      <label for="quoted_by">Quoted By:</label>
+      <input type="text" name="quoted_by" value="">
+
+      <label for="message">Message:</label>
+      <textarea type="text" name="message" value=""></textarea>
+
+      <input class="button-primary" type="submit" name="submit" value="Submit">
+    </form>
+
+  </body>
+</html>

@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Login & Reg | Success</title>
+    <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/skeleton-framework/1.1.1/skeleton.min.css">
+  </head>
+  <body>
+    {% for user in users %}
+    <h1>Success! Welcome, {{user.name}}!</h1>
+    {% endfor %}
+    <h3>You have successfully {{type}}!</h3>
+    <h3><a href="{% url 'logregapp:main' %}">Please Login</a></h3>
+  </body>
+</html>

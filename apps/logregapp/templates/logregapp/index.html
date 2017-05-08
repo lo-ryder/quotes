@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Login & Reg | Home</title>
+    <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/skeleton-framework/1.1.1/skeleton.min.css">
+  </head>
+
+  <body>
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+          {% for indx in messages %}
+            <li>{{ message }}</li>
+          {% endfor %}
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+    <h1>Registration</h1>
+    <form class="register" action="{% url 'logregapp:register' %}" method="post">
+    {% csrf_token %}
+      <label for="name">Name:</label>
+      <input type="text" name="name" value="">
+
+      <label for="alias">Alias:</label>
+      <input type="text" name="alias" value="">
+
+      <label for="email">Email:</label>
+      <input type="text" name="email" value="">
+
+      <label for="password">Password:</label>
+      <input type="password" name="password" value="">
+
+      <label for="con_password">Confirm Password:</label>
+      <input type="password" name="con_password" value="">
+
+      <label for="dob">Date of Birth:</label>
+      <input type="text" name="dob" value="YYYY-MM-DD">
+
+      <input class="button-primary" type="submit" name="submit" value="Register">
+
+    </form>
+
+    <h1>Login</h1>
+    <form class="login" action="{% url 'logregapp:login' %}" method="post">
+    {% csrf_token %}
+      <label for="email">Email:</label>
+      <input type="text" name="email" value="">
+
+      <label for="password">Password:</label>
+      <input type="password" name="password" value="">
+      <input class="button-primary" type="submit" name="submit" value="Login">
+    </form>
+  </body>
+</html>

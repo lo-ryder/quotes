@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Quote App</title>
+    <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/skeleton-framework/1.1.1/skeleton.min.css">
+  </head>
+
+  <body>
+    <a href="{% url 'quotableapp:quotes'%}">Dashboard</a>
+    <a href="{% url 'logregapp:index'%}">Logout</a>
+
+    <h1>Posts by {{ postsUser.alias }}!</h1>
+
+    <h2>Count: {{quotableQuotes | length}} </h2>
+
+    {% for quote in quotableQuotes %}
+    <h2>{{quote.quoted_by}}: {{quote.message}}</h2>
+    {% endfor %}
+
+  </body>
+</html>
